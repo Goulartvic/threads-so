@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -216,51 +218,138 @@ public class Controller {
     @FXML
     private Rectangle square99;
 
+//    Future future0;
+//    Future future1;
+//    Future future2;
+//    Future future3;
+//    Future future4;
+//
+
     @FXML
     private AnchorPane anchorPane;
 
     @FXML
-    public void easyGameAction() {
+    public synchronized void easyGameAction() {
+//        setOnClickListener();
         ExecutorService executor = Executors.newFixedThreadPool(5);
-        executor.execute(easyGame());
+        for (int i = 0; i<5; i++) {
+            executor.execute(easyGame());
+//            switch (i) {
+//                case 0: {
+//                    future0 = executor.submit(easyGame());
+//                    break;
+//                }
+//                case 1: {
+//                    future1 = executor.submit(easyGame());
+//                }
+//                case 2: {
+//                    future2 = executor.submit(easyGame());
+//                    break;
+//                }
+//                case 3: {
+//                    future3 = executor.submit(easyGame());
+//                    break;
+//                }
+//                case 4: {
+//                    future4 = executor.submit(easyGame());
+//                    break;
+//                }
+//            }
+        }
         executor.shutdown();
     }
 
     @FXML
-    public void onAction() {
-        Random random = new Random();
-        int sort = random.nextInt(100);
-        List<Rectangle> rectangles = rectangleList();
-        Rectangle rectangle = rectangles.get(sort);
-        if (rectangle.getFill() == Color.DODGERBLUE) {
-            rectangle.setFill(Color.BLACK);
-//            anchorPane.getChildren().add(rectangle);
-        }
+    public synchronized void mediumGameAction() {
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        for (int i = 0; i<5; i++) {
+            executor.execute(mediumGame());}
+        executor.shutdown();
     }
+
+    @FXML
+    public synchronized void hardGameAction() {
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        for (int i = 0; i<5; i++) {
+            executor.execute(hardGame());}
+        executor.shutdown();
+    }
+
+//    private void setOnClickListener() {
+//        List<Rectangle> rectangles = rectangleList();
+//        square0.setOnMouseClicked(event -> {
+//        });
+//    }
 
     public Runnable easyGame() {
         Random random = new Random();
         final Instant[] now = {Instant.now()};
-        Instant after = now[0].plusSeconds(330);
+        Instant maxTime = now[0].plusSeconds(300);
         return () -> {
-            while (now[0].isBefore(after)) {
-                int sort = random.nextInt(100);
-                List<Rectangle> rectangles = rectangleList();
+            while (now[0].isBefore(maxTime)) {
+                int sort = random.nextInt(60);
+                List<Rectangle> rectangles = Controller.this.rectangleList();
                 Rectangle rectangle = rectangles.get(sort);
-                rectangle.setFill(Color.BLACK);
-                System.out.println("pintado");
-                sleep();
-                System.out.println("acordado");
-                cleanSquare(sort, rectangles);
-                System.out.println("limpo");
+                if (rectangle.getFill() == Color.DODGERBLUE) {
+                    rectangle.setFill(Color.BLACK);
+                    System.out.println("pintado");
+                    Controller.this.sleep(2000);
+                    System.out.println("acordado");
+                    Controller.this.cleanSquare(sort, rectangles);
+                    System.out.println("limpo");
+                } else System.out.printf("mesma posição");
                 now[0] = Instant.now();
             }
         };
     }
 
-    private void sleep() {
+    public Runnable mediumGame() {
+        Random random = new Random();
+        final Instant[] now = {Instant.now()};
+        Instant maxTime = now[0].plusSeconds(50);
+        return () -> {
+            while (now[0].isBefore(maxTime)) {
+                int sort = random.nextInt(100);
+                List<Rectangle> rectangles = Controller.this.rectangleList();
+                Rectangle rectangle = rectangles.get(sort);
+                if (rectangle.getFill() == Color.DODGERBLUE) {
+                    rectangle.setFill(Color.BLACK);
+                    System.out.println("pintado");
+                    Controller.this.sleep(1500);
+                    System.out.println("acordado");
+                    Controller.this.cleanSquare(sort, rectangles);
+                    System.out.println("limpo");
+                } else System.out.printf("mesma posição");
+                now[0] = Instant.now();
+            }
+        };
+    }
+
+    public Runnable hardGame() {
+        Random random = new Random();
+        final Instant[] now = {Instant.now()};
+        Instant maxTime = now[0].plusSeconds(40);
+        return () -> {
+            while (now[0].isBefore(maxTime)) {
+                int sort = random.nextInt(100);
+                List<Rectangle> rectangles = Controller.this.rectangleList();
+                Rectangle rectangle = rectangles.get(sort);
+                if (rectangle.getFill() == Color.DODGERBLUE) {
+                    rectangle.setFill(Color.BLACK);
+                    System.out.println("pintado");
+                    Controller.this.sleep(1000);
+                    System.out.println("acordado");
+                    Controller.this.cleanSquare(sort, rectangles);
+                    System.out.println("limpo");
+                } else System.out.printf("mesma posição");
+                now[0] = Instant.now();
+            }
+        };
+    }
+
+    private void sleep(int millis) {
         try {
-            Thread.sleep(500);
+            Thread.sleep(millis);
             System.out.println("dormindo");
         } catch (InterruptedException e) {
             e.printStackTrace();

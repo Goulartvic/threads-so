@@ -106,8 +106,8 @@
        <Rectangle fx:id="square99" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="380.0" layoutY="383.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
        <Rectangle fx:id="square98" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="340.0" layoutY="383.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
        <Rectangle fx:id="square97" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="300.0" layoutY="383.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-      <Button layoutX="516.0" layoutY="23.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Dificil" onAction="#easyGameAction" />
-      <Button layoutX="516.0" layoutY="63.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Medio" />
-      <Button layoutX="516.0" layoutY="103.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Facil" />
+      <Button layoutX="516.0" layoutY="23.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Dificil" onAction="#hardGameAction" />
+      <Button layoutX="516.0" layoutY="63.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Medio" onAction="#mediumGameAction"/>
+      <Button layoutX="516.0" layoutY="103.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Facil" onAction="#easyGameAction"/>
    </children>
 </AnchorPane>
